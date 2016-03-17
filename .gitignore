@@ -6,6 +6,7 @@ __pycache__/
 *.log
 db.sqlite3
 migrations/
+local_settings.py
 
 # Sphinx documentation
 docs/_build/
@@ -17,4 +18,4 @@ target/
 .ipynb_checkpoints
 
 # Virtual Environment
-master_venv/
+safe_eats_venv/
