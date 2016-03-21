@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+#from safe_eats.views import *
+#from safe_eats_app import urls as safe_eats_app_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    #url(r'^$', include(safe_eats_app_urls))
 ]
