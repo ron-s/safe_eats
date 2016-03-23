@@ -12,8 +12,8 @@ class RestaurantInfo(models.Model):
 	address = models.CharField(max_length=100)
 	city = models.CharField(max_length=50)
 	zip_code = models.SlugField(max_length=15)
-	longitude = models.FloatField()
-	latitude = models.FloatField()
+	longitude = models.FloatField(blank=True)
+	latitude = models.FloatField(blank=True)
 	health_inspection_src = models.ForeignKey('HealthInspectionSource')
 
 	def __str__(self):
