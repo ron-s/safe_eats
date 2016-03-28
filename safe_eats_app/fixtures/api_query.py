@@ -116,6 +116,6 @@ def get_restaurant_info():
 	with open('inspection_reports.json', "w") as f:
 		json.dump(inspect_report, f, indent=2)
 
-
-if __name__ == '__main__':
-	get_restaurant_info()
+main()
+#if __name__ == '__main__':
+	#get_restaurant_info()
