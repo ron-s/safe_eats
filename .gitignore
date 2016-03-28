@@ -19,3 +19,9 @@ target/
 
 # Virtual Environment
 safe_eats_venv/
+
+.DS_Store
+
+restaurants.json
+inspection_reports.json
+inspection_results.json
