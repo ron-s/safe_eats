@@ -8,3 +8,5 @@ def safe_eats_index(request):
 	#print("test")
 	#return an httpresponse of object using the render function
 	return render(request, 'safe_eats/safe_eats.html')
+
+

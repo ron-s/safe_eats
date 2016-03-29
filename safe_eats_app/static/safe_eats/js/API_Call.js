@@ -21,8 +21,7 @@ $(window).load(function() {
         content: contentString
         });
       var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(entry.latitude, 
-                                                   entry.longitude),
+        position: new google.maps.LatLng(entry.latitude, entry.longitude),
         map: map,
         title: entry.inspection_business_name
               });
