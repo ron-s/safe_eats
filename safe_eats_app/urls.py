@@ -20,5 +20,6 @@ from .views import *
 
 urlpatterns = [
 url(r'$', safe_eats_index, name='safe_eats'),
+#url(r'^restaurants/(?P<year>[0-9]{4})/$', views.year_archive),
 
 ]
