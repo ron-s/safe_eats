@@ -18,6 +18,8 @@ from django.conf.urls import url, include
 from django.contrib import admin
 #from safe_eats.views import *
 from safe_eats_app import urls as safe_eats_app_urls
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -25,4 +27,5 @@ urlpatterns = [
     
     url(r'^', include(safe_eats_app_urls)),
 
-]
+
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
