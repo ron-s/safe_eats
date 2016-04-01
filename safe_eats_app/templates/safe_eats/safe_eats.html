@@ -15,12 +15,13 @@
 
 <script src="http://maps.google.com/maps/api/js?sensor=false"
         type="text/javascript"></script>
+<!--Below we will draw a google map based on lat/long from each restaurant-->
 <script>
     var infos = [];
     var loc = {{ restaurants|safe }};
 
     function initialize() {
-
+    // create a google map and center it on the city of seattle
         var myOptions = {
             center: new google.maps.LatLng(47.608013, -122.335167),
             zoom: 10,
@@ -36,7 +37,7 @@
 
 
     function setMarkers(map, loc) {
-
+        // create an array of markers to add to the google map
         for (var i in loc) {
             var obj = loc[i];
             var name = obj.name;
@@ -44,23 +45,24 @@
             var long = obj.longitude;
 
             latlngset = new google.maps.LatLng(lat, long);
-
+            //define where to set the markers
             var marker = new google.maps.Marker({
                 map: map, title: name, position: latlngset
             });
             map.setCenter(marker.getPosition());
 
+            // content string to place in the infowindow 
             var content = '<div><b><a href="restaurants/' + obj.bus_id + '/">' + obj.name + '</a></b></div>' + '<div>' + obj.address + '</div>' + '<div>' + 'Inspection Result:  ' + obj.results.result_1.inspection_result + '</div>' + '<div>' + obj.results.result_1.description + '</div>';
 
             var infowindow = new google.maps.InfoWindow();
-
+            // add a click event listener when the user clicks on a marker to display the infowindow 
             google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
                 return function () {
-                    /* close the previous info-window */
+                    // close the previous info-window
                     closeInfos();
                     infowindow.setContent(content);
                     infowindow.open(map, marker);
-                    /* keep the handle, in order to close it on next click event */
+                    // keep the handle, in order to close it on next click event
                     infos[0] = infowindow;
                 };
             })(marker, content, infowindow));
@@ -69,11 +71,11 @@
 
     function closeInfos() {
         if (infos.length > 0) {
-            /* detach the info-window from the marker ... undocumented in the API docs */
+            // detach the info-window from the marker ... undocumented in the API docs
             infos[0].set("marker", null);
-            /* and close it */
+            // and close it
             infos[0].close();
-            /* blank the array */
+            // blank the array
             infos.length = 0;
         }
     }
