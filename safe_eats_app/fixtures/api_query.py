@@ -7,6 +7,8 @@ inspect_results = []
 
 
 def get_restaurant_info():
+    """Contact the King county API to obtain a JSON list of objects containing restaurant health inspection info that will be saved to 3 separate JSON files. """
+
     url = "https://data.kingcounty.gov/resource/gkhn-e8mn.json?&inspection_business_name=Subway&$where=inspection_date%20between%20%272015-01-01T12:00:00%27%20and%20%272016-03-22T14:00:00%27"
     r = requests.get(url)
 
@@ -18,6 +20,7 @@ def get_restaurant_info():
     pk = 0
 
     for val in data:
+        #parse the JSON into a dict of keys called restaurant
         restaurant = {}
         restaurant["fields"] = {}
         restaurant["model"] = "safe_eats_app.restaurantinfo"
@@ -30,8 +33,11 @@ def get_restaurant_info():
         restaurant["fields"]["longitude"] = val["longitude"]
         restaurant["fields"]["latitude"] = val["latitude"]
 
+        #add the results to the restaurant dict
         rests.append(restaurant)
 
+
+        #parse the JSON into a dict of keys called inspection
         inspection = {}
         inspection["pk"] = val["inspection_serial_num"]
         inspection["model"] = "safe_eats_app.InspectionReport"
@@ -40,8 +46,10 @@ def get_restaurant_info():
         inspection["fields"]["restaurant"] = val["business_id"]
         inspection["fields"]["inspection_date"] = val["inspection_date"][0:10]
 
+        #add the results to the inspection dict
         inspect_report.append(inspection)
 
+        #parse the JSON into a dict of keys called violation
         violation = {}
         if val["violation_points"] == "0":
             count += 1
@@ -61,14 +69,18 @@ def get_restaurant_info():
         violation["pk"] = pk
         pk += 1
 
+        #add the results to the violation dict
         inspect_results.append(violation)
 
+    #The restaurant file will contain the restaurant name and location.
     with open('restaurants.json', "w") as f:
         json.dump(rests, f, indent=2)
 
+    #The Inspection report file will contain the restaurant info attached to the inpection report.
     with open('inspection_results.json', "w") as f:
         json.dump(inspect_results, f, indent=2)
 
+    #The Inspection results will contain the results from each inspection. More than one result is possible for each report.
     with open('inspection_reports.json', "w") as f:
         json.dump(inspect_report, f, indent=2)
 

@@ -2,29 +2,39 @@
 {% block content %}
 
 <div class="jumbotron">
+    <div class="container">
     <h1>Safe Eats</h1>
-    <p>Restaurant Inspection Report Details</p>
-</div>
+    <p>Restaurant Inspection Report Details</br>
+        <a class="btn btn-lg btn-primary" href="/" role="button">Return Home »</a>
+    </p>
 
-<div style="jumbotron">
-{{ rest_info.business_name }}<br>
-{{ rest_info.address }}
-<br>
-<br>
-{% for rep in reports %}
-<div style="background-color: beige; margin: 5px;">
-{{ rep.inspection_date }}<br>
-    {% for x in rep.related_set %}
-        {% if x.violation_description == '' %}
-            Satisfactory<br>
-            <br>
-        {% else %}
-        {{ x.violation_description }}<br>
-        <br>
-        {% endif %}
-    {% endfor %}
     </div>
-{% endfor %}
-
+</div>
+<div class="container mainContent">
+    <div class="bs-callout bs-callout-info">
+    <p>
+    Restaurant Name:  <b>{{ rest_info.business_name }}</b><br>
+    Address:  <b>{{ rest_info.address }}</b>
+    <br>
+    <br>
+    {% for rep in reports %}
+    </p>
+    <div>
+        <p class="bg-info">
+    {{ rep.inspection_date }}<br>
+        {% for x in rep.related_set %}
+            {% if x.violation_description == '' %}
+                Satisfactory<br>
+                <br>
+            {% else %}
+            <p class="bg-warning">
+            {{ x.violation_description }}<br>
+            <br>
+            {% endif %}
+        {% endfor %}
+        </div>
+    {% endfor %}
+        </p>
+    </div>
 </div>
 {% endblock %}

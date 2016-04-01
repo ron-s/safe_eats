@@ -2,12 +2,16 @@
 {% block content %}
 
 <div class="jumbotron">
+    <div class="container">
     <h1>Safe Eats</h1>
-    <p>This is a Django App that showcases the Restaurant Health Inspection Reports for King County (City of Seattle) Restaurants.</br>
-        Click on a marker to view to a short health inspection response. Click on the restaurant name to view a history of reports.</p>
+    <p>This is a Django App that showcases the Restaurant Health Inspection Reports for King County (City of Seattle) Restaurants.</br></br>
+        Click on a marker to view to a short health inspection response.</br>
+        Click on the restaurant name to view a history of reports.</p>
+    </div>
 </div>
-
-<div id="map"></div>
+<div class="container mainContent">
+    <div id="map"></div>
+</div>
 
 <script src="http://maps.google.com/maps/api/js?sensor=false"
         type="text/javascript"></script>
