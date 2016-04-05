@@ -4,6 +4,7 @@ import json
 from django.core import serializers
 
 
+
 def safe_eats_index(request):
   """creates a json string containing every restaurant and its associated info that will be placed on the homepage map as a marker with info window"""
 

@@ -1,44 +1,29 @@
-{% extends "base.html" %}
-{% block content %}
-
-<div class="jumbotron">
-    <div class="container">
-    <h1>Safe Eats</h1>
-    <p>Restaurant Inspection Report Details</br>
-        <a class="btn btn-lg btn-primary" href="/" role="button">Return Home »</a>
-    </p>
-
-    </div>
-</div>
-<div class="container mainContent">
-    <div class="bs-callout bs-callout-info">
-    <p>
-    Restaurant Name:  <b>{{ rest_info.business_name }}</b><br>
-    Address:  <b>{{ rest_info.address }}</b>
-    <br>
-    <br>
-    <!-- display all reports for each restaurant-->
-    {% for rep in reports %}
-    </p>
-    <div>
-        <!--for each inspection report display all related results-->
-        <p class="bg-info">
-    {{ rep.inspection_date }}<br>
-        {% for x in rep.related_set %}
-            <!--if no violation description exists then print an english Satifactory result-->
-            {% if x.violation_description == '' %}
-                Satisfactory<br>
-                <br>
-            <!--if a violation description exists then print all results-->
-            {% else %}
-            <p class="bg-warning">
-            {{ x.violation_description }}<br>
+<div class="bs-callout bs-callout-info">
+<p>
+Restaurant Name:  <b>{{ rest_info.business_name }}</b><br>
+Address:  <b>{{ rest_info.address }}</b>
+<br>
+<br>
+<!-- display all reports for each restaurant-->
+{% for rep in reports %}
+</p>
+<div>
+    <!--for each inspection report display all related results-->
+    <p class="bg-info">
+{{ rep.inspection_date }}<br>
+    {% for x in rep.related_set %}
+        <!--if no violation description exists then print an english Satifactory result-->
+        {% if x.violation_description == '' %}
+            Satisfactory<br>
             <br>
-            {% endif %}
-        {% endfor %}
-        </div>
+        <!--if a violation description exists then print all results-->
+        {% else %}
+        <p class="bg-warning">
+        {{ x.violation_description }}<br>
+        <br>
+        {% endif %}
     {% endfor %}
-        </p>
     </div>
+{% endfor %}
+    </p>
 </div>
-{% endblock %}
