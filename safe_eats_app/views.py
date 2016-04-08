@@ -13,7 +13,7 @@ def safe_eats_index(request):
 
   #create a dict called restaurants that identifies each object by the retaurant's business_id
   restaurants = {}
-  for place in RestaurantInfo.objects.all():
+  for place in RestaurantInfo.objects.all()[:50]:
       restaurants[place.business_id] = {"name": place.business_name,
                                         "address": place.address,
                                         "longitude": place.longitude,

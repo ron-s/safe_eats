@@ -16,7 +16,7 @@ def get_restaurant_info():
     pk = 0
 
     while offset < 10000:
-        url = "http://data.kingcounty.gov/resource/gkhn-e8mn.json?$limit=10000&$offset="+ str(offset) +"&$where=inspection_date%20between%20%272013-01-01T12:00:00%27%20and%20%272016-03-22T14:00:00%27&$$app_token="
+        url = "http://data.kingcounty.gov/resource/gkhn-e8mn.json?$limit=10000&$offset=" + str(offset) + "&$where=inspection_date%20between%20%272013-01-01T12:00:00%27%20and%20%272016-04-08T14:00:00%27&$$app_token=ybQy5wLjPD5YeX6uCeahIgRdT"
 
         #url = "https://data.kingcounty.gov/resource/gkhn-e8mn.json?&inspection_business_name=Subway&$where=inspection_date%20between%20%272015-01-01T12:00:00%27%20and%20%272016-03-22T14:00:00%27"
         r = requests.get(url)
@@ -24,8 +24,9 @@ def get_restaurant_info():
         data = r.json()
         #print(data)
 
-        try:
-            for val in data:
+
+        for val in data:
+            try:
                 #parse the JSON into a dict of keys called restaurant
 
                 restaurant = {}
@@ -106,18 +107,23 @@ def get_restaurant_info():
 
                 violation["fields"]["violation_points"] = val["violation_points"]
                 violation["pk"] = pk
+
+                #add the results to the violation dict
+                inspect_results.append(violation)
+
                 pk += 1
 
-        except KeyError:
-            pass
 
+            except KeyError:
+                pass
 
         offset += 500
         time.sleep(5)
         print(offset)
 
-        #add the results to the violation dict
-        inspect_results.append(violation)
+
+
+
 
     #The restaurant file will contain the restaurant name and location.
     with open('restaurants.json', "w") as f:
