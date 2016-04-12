@@ -43,9 +43,12 @@ def rest(request, restaurant):
   reports = InspectionReport.objects.filter(restaurant=restaurant_info.business_id)
   #locate all the results associated for each inspection report
   for repor in reports:
+      print(InspectionResult.objects.filter(inspection=repor.inspection_serial_num))
       rep = []
+
       for x in InspectionResult.objects.filter(inspection=repor.inspection_serial_num):
           #append all results to each inspection report
+          print(x)
           rep.append(x)
       repor.related_set = rep
   return render(request, 'safe_eats/restaurant.html', {'rest_info': restaurant_info,
