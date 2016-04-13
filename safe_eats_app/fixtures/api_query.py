@@ -16,7 +16,7 @@ def get_restaurant_info():
     pk = 0
 
     while offset < 10000:
-        url = "http://data.kingcounty.gov/resource/gkhn-e8mn.json?$limit=10000&$offset=" + str(offset) + "&$where=inspection_date%20between%20%272013-01-01T12:00:00%27%20and%20%272016-04-08T14:00:00%27&$$app_token=ybQy5wLjPD5YeX6uCeahIgRdT"
+        url = "http://data.kingcounty.gov/resource/gkhn-e8mn.json?$limit=10000&$offset=" + str(offset) + "&$where=inspection_date%20between%20%272014-01-01T12:00:00%27%20and%20%272016-04-08T14:00:00%27&$$app_token=ybQy5wLjPD5YeX6uCeahIgRdT"
 
         #url = "https://data.kingcounty.gov/resource/gkhn-e8mn.json?&inspection_business_name=Subway&$where=inspection_date%20between%20%272015-01-01T12:00:00%27%20and%20%272016-03-22T14:00:00%27"
         r = requests.get(url)
@@ -35,6 +35,11 @@ def get_restaurant_info():
                 restaurant["pk"] = val["business_id"]
                 # restaurant["fields"]["business_id"] = val["business_id"]
                 restaurant["fields"]["business_name"] = val["inspection_business_name"]
+
+                if val["inspection_closed_business"] == "true":
+                    restaurant["fields"]["inspection_closed_business"] = True 
+                else:
+                    restaurant["fields"]["inspection_closed_business"] = False
                 try:
                     restaurant["fields"]["address"] = val["address"]
                 except KeyError:
@@ -63,6 +68,7 @@ def get_restaurant_info():
                 inspection["model"] = "safe_eats_app.InspectionReport"
                 inspection["fields"] = {}
                 inspection["fields"]["inspection_business_name"] = val["inspection_business_name"]
+
                 try:
                     inspection["fields"]["restaurant"] = val["business_id"]
                 except KeyError:
@@ -79,9 +85,14 @@ def get_restaurant_info():
 
                 #parse the JSON into a dict of keys called violation
                 violation = {}
-                if val["violation_points"] == "0":
-                    count += 1
-                violation["violation_record_id"] = val.get("violation_record_id", count)
+                # if val["violation_points"] == "0":
+                #     count += 1
+
+                try:
+                    violation["violation_record_id"] = val.get("violation_record_id")
+                except KeyError:
+                    violation["violation_record_id"] = ""
+
                 violation["fields"] = {}
                 violation["model"] = "safe_eats_app.InspectionResult"
                 violation["fields"]["inspection"] = val["inspection_serial_num"]

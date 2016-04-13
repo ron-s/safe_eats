@@ -54,9 +54,11 @@
                 map: map, title: name, position: latlngset
             });
             map.setCenter(marker.getPosition());
-
+            
+            //display the inspection result, inspection score and description of results
             if (obj.results.result_1) {
                 inspectionResult = obj.results.result_1.inspection_result
+                inspectionScore = obj.results.result_1.inspection_score
                 description = obj.results.result_1.description
             } else {
             
@@ -66,7 +68,7 @@
 
 
             // content string to place in the infowindow 
-            var content = '<div class="infowindow"><b><a href="#" onclick="slidePanel(\'' + obj.bus_id + '\');return false;">' + obj.name + '</a></b></div>' + '<div class="infowindow">' + obj.address + '</div>' + '<div class="infowindow">' + 'Inspection Result:  ' + inspectionResult + '</div>' + '<div class="infowindow">' + description + '</div>';
+            var content = '<div class="infowindow"><b><a href="#" onclick="slidePanel(\'' + obj.bus_id + '\');return false;">' + obj.name + '</a></b></div>' + '<div class="infowindow">' + obj.address + '</div>' + '<div class="infowindow">' + 'Inspection Result:  ' + inspectionResult + '</div>' + '<div class="infowindow">' + 'Inspection Score:  ' + inspectionScore + '</div>' + '<div class="infowindow">' + description + '</div>';
 
             var infowindow = new google.maps.InfoWindow();
             // add a click event listener when the user clicks on a marker to display the infowindow 

@@ -7,6 +7,7 @@ class RestaurantInfo(models.Model):
 
     business_id = models.CharField(primary_key=True, max_length=100)
     business_name = models.CharField(max_length=100)
+    inspection_closed_business = models.BooleanField(default=False)
     address = models.CharField(max_length=100, blank=True)
     city = models.CharField(max_length=50)
     zip_code = models.SlugField(max_length=100)
