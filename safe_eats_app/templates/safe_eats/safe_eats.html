@@ -2,100 +2,109 @@
 {% load staticfiles %}
 {% block content %}
 
-<div class="jumbotron">
-    <h1>Safe Eats</h1>
-    <p>This is a Django App that showcases the Restaurant Health Inspection Reports for King County (City of Seattle) Restaurants.
-</div>
-<div class="container">
-    Click on a marker to view a short health inspection response.</br>
-    Click on the restaurant name in the info window to view a history of reports.</p>
-</div>
+    <div class="jumbotron">
+        <h1>Safe Eats</h1>
+        <p>This is a Django App that showcases the Restaurant Health Inspection Reports for King County (City of
+            Seattle) Restaurants.
+    </div>
+    <div class="container">
+        Click on a marker to view a short health inspection response.</br>
+        Click on the restaurant name in the info window to view a history of reports.</p>
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="inputDefault">Enter Restaurant Name</label>
+        <input type="text" class="form-control" id="inputDefault">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button">SEARCH</button>
+        </span>
+    </div>
 
-<div class="container mainContent">
-    <div id="slide-panel"></div>
-    <div id="map"></div>
-</div>
+    <div class="container mainContent">
+        <div id="slide-panel"></div>
+        <div id="map"></div>
+    </div>
 
-<script src="http://maps.google.com/maps/api/js?sensor=false"
-        type="text/javascript"></script>
-<!--Below we will draw a google map based on lat/long from each restaurant-->
-<script>
-    var infos = [];
-    var loc = {{ restaurants|safe }};
-    var slidePanelId;
+    <script src="http://maps.google.com/maps/api/js?sensor=false"
+            type="text/javascript"></script>
+    <!--Below we will draw a google map based on lat/long from each restaurant-->
+    <script>
+        var infos = [];
+        var loc = {{ restaurants|safe }};
+        var slidePanelId;
 
-    function initialize() {
-    // create a google map and center it on the city of seattle
-        var myOptions = {
-            center: new google.maps.LatLng(47.608013, -122.335167),
-            zoom: 10,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+        function initialize() {
+            // create a google map and center it on the city of seattle
+            var myOptions = {
+                center: new google.maps.LatLng(47.608013, -122.335167),
+                zoom: 10,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
 
-        };
-        var map = new google.maps.Map(document.getElementById("map"),
-                myOptions);
+            };
+            var map = new google.maps.Map(document.getElementById("map"),
+                    myOptions);
 
-        setMarkers(map, loc)
+            setMarkers(map, loc)
 
-    }
+        }
 
 
-    function setMarkers(map, loc) {
-        // create an array of markers to add to the google map
-        for (var i in loc) {
-            var obj = loc[i];
-            var name = obj.name;
-            var lat = obj.latitude;
-            var long = obj.longitude;
+        function setMarkers(map, loc) {
+            // create an array of markers to add to the google map
+            for (var i in loc) {
+                var obj = loc[i];
+                var name = obj.name;
+                var lat = obj.latitude;
+                var long = obj.longitude;
+                console.log(obj)
 
-            latlngset = new google.maps.LatLng(lat, long);
-            //define where to set the markers
-            var marker = new google.maps.Marker({
-                map: map, title: name, position: latlngset
-            });
-            map.setCenter(marker.getPosition());
-            
-            //display the inspection result, inspection score and description of results
-            if (obj.results.result_1) {
-                inspectionResult = obj.results.result_1.inspection_result
-                inspectionScore = obj.results.result_1.inspection_score
-                description = obj.results.result_1.description
-            } else {
-            
-            inspectionResult = "No Result"
-            description = "None"
+                latlngset = new google.maps.LatLng(lat, long);
+                //define where to set the markers
+                var marker = new google.maps.Marker({
+                    map: map, title: name, position: latlngset
+                });
+                map.setCenter(marker.getPosition());
+
+                //display the inspection result, inspection score and description of results
+                if (obj.results.result_1) {
+                    inspectionResult = obj.results.result_1.inspection_result
+                    inspectionScore = obj.results.result_1.inspection_score
+                    description = obj.results.result_1.description
+                } else {
+
+                    inspectionResult = "No Result"
+                    description = "None"
+                }
+
+
+                // content string to place in the infowindow
+                var content = '<div class="infowindow"><b><a href="#" onclick="slidePanel(\'' + obj.bus_id + '\');return false;">' + obj.name + '</a></b></div>' + '<div class="infowindow">' + obj.address + '</div>' + '<div class="infowindow">' + 'Inspection Result:  ' + inspectionResult + '</div>' + '<div class="infowindow">' + 'Inspection Score:  ' + inspectionScore + '</div>' + '<div class="infowindow">' + description + '</div>';
+
+                var infowindow = new google.maps.InfoWindow();
+                // add a click event listener when the user clicks on a marker to display the infowindow
+                google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
+                    return function () {
+                        // close the previous info-window
+                        closeInfos();
+                        infowindow.setContent(content);
+                        infowindow.open(map, marker);
+                        // keep the handle, in order to close it on next click event
+                        infos[0] = infowindow;
+                    };
+                })(marker, content, infowindow));
             }
-
-
-            // content string to place in the infowindow 
-            var content = '<div class="infowindow"><b><a href="#" onclick="slidePanel(\'' + obj.bus_id + '\');return false;">' + obj.name + '</a></b></div>' + '<div class="infowindow">' + obj.address + '</div>' + '<div class="infowindow">' + 'Inspection Result:  ' + inspectionResult + '</div>' + '<div class="infowindow">' + 'Inspection Score:  ' + inspectionScore + '</div>' + '<div class="infowindow">' + description + '</div>';
-
-            var infowindow = new google.maps.InfoWindow();
-            // add a click event listener when the user clicks on a marker to display the infowindow 
-            google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
-                return function () {
-                    // close the previous info-window
-                    closeInfos();
-                    infowindow.setContent(content);
-                    infowindow.open(map, marker);
-                    // keep the handle, in order to close it on next click event
-                    infos[0] = infowindow;
-                };
-            })(marker, content, infowindow));
         }
-    }
 
-    function closeInfos() {
-        if (infos.length > 0) {
-            // detach the info-window from the marker ... undocumented in the API docs
-            infos[0].set("marker", null);
-            // and close it
-            infos[0].close();
-            // blank the array
-            infos.length = 0;
+        function closeInfos() {
+            if (infos.length > 0) {
+                // detach the info-window from the marker ... undocumented in the API docs
+                infos[0].set("marker", null);
+                // and close it
+                infos[0].close();
+                // blank the array
+                infos.length = 0;
+            }
         }
-    }
-    initialize();
-</script>
-<script src="{% static 'safe_eats/js/side_panel.js' %}"></script>
+        initialize();
+    </script>
+    <script src="{% static 'safe_eats/js/side_panel.js' %}"></script>
 {% endblock %}

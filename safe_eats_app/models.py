@@ -39,7 +39,7 @@ class InspectionResult(models.Model):
     inspection_result = models.CharField(max_length=100)
     violation_description = models.CharField(max_length=100, blank=True)
     violation_points = models.CharField(max_length=100)
-    violation_record_id = models.CharField(max_length=100, blank=True)
+    violation_record_id = models.CharField(primary_key=True, max_length=100)
 
     def __str__(self):
         return self.violation_description

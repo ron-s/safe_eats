@@ -37,7 +37,7 @@ def get_restaurant_info():
                 restaurant["fields"]["business_name"] = val["inspection_business_name"]
 
                 if val["inspection_closed_business"] == "true":
-                    restaurant["fields"]["inspection_closed_business"] = True 
+                    restaurant["fields"]["inspection_closed_business"] = True
                 else:
                     restaurant["fields"]["inspection_closed_business"] = False
                 try:
@@ -91,7 +91,7 @@ def get_restaurant_info():
                 try:
                     violation["violation_record_id"] = val.get("violation_record_id")
                 except KeyError:
-                    violation["violation_record_id"] = ""
+                    violation["violation_record_id"] = "0"
 
                 violation["fields"] = {}
                 violation["model"] = "safe_eats_app.InspectionResult"
@@ -117,7 +117,7 @@ def get_restaurant_info():
                     violation["fields"]["violation_description"] = ""
 
                 violation["fields"]["violation_points"] = val["violation_points"]
-                violation["pk"] = pk
+                violation["pk"] = val["violation_record_id"]
 
                 #add the results to the violation dict
                 inspect_results.append(violation)
