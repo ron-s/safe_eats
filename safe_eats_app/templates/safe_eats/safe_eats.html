@@ -1,29 +1,27 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% block content %}
-
+<div class="container">
     <div class="jumbotron">
         <h1>Safe Eats</h1>
-        <p>This is a Django App that showcases the Restaurant Health Inspection Reports for King County (City of
-            Seattle) Restaurants.
-    </div>
-    <div class="container">
-        Click on a marker to view a short health inspection response.</br>
-        Click on the restaurant name in the info window to view a history of reports.</p>
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="inputDefault">Enter Restaurant Name</label>
-        <input type="text" class="form-control" id="inputDefault">
-        <span class="input-group-btn">
-            <button class="btn btn-default" type="button">SEARCH</button>
-        </span>
+        <p>This is a Django App showcasing Restaurant Health Inspection Reports for King County (City of Seattle).</p>
     </div>
 
+    <form id="searchform" method="get">
+        <label for="name"></label>
+        <input type="text" class="form-control" name="name" placeholder="Type Restaurant Name To Search..." required/>
+        <input class="btn btn-info" type="submit" name="submit" id="submit" value="GO!" />
+    </form>
+
+    <div class="container">
+        <p> Click on a marker to view a short health inspection response.</br>
+            Click on the restaurant name in the info window to view a history of reports.</p>
+    </div>
     <div class="container mainContent">
         <div id="slide-panel"></div>
         <div id="map"></div>
     </div>
-
+</div>
     <script src="http://maps.google.com/maps/api/js?sensor=false"
             type="text/javascript"></script>
     <!--Below we will draw a google map based on lat/long from each restaurant-->
@@ -35,7 +33,7 @@
         function initialize() {
             // create a google map and center it on the city of seattle
             var myOptions = {
-                center: new google.maps.LatLng(47.608013, -122.335167),
+                center: new google.maps.LatLng(47.6023411, -122.3238544),
                 zoom: 10,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
 
@@ -72,6 +70,7 @@
                 } else {
 
                     inspectionResult = "No Result"
+                    inspectionScore = "None"
                     description = "None"
                 }
 

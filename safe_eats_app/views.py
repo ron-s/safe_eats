@@ -64,7 +64,7 @@ def rest(request, restaurant):
 
 
 
-    # def restaurants_closed(request):
+    # def restaurants_search(request):
     #   """creates a json string containing every restaurant that has been closed down due to failing a restaurant inspection and place a marker on the google map with an info window"""
 
     #   # restaurants = RestaurantInfo.objects.all()
