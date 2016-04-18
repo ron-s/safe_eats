@@ -21,4 +21,5 @@ from .views import *
 urlpatterns = [
     url(r'^$', safe_eats_index, name='safe_eats'),
     url(r'^restaurants/(?P<restaurant>\w+)/$', rest),
+    url(r'^restaurant_search/$', restaurant_search),
 ]

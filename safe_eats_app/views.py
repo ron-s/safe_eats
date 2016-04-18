@@ -2,6 +2,9 @@ from .models import RestaurantInfo, InspectionReport, InspectionResult
 from django.shortcuts import render
 import json
 from django.core import serializers
+from django.db.models import Q
+
+
 
 
 def safe_eats_index(request):
@@ -64,33 +67,37 @@ def rest(request, restaurant):
 
 
 
-    # def restaurants_search(request):
-    #   """creates a json string containing every restaurant that has been closed down due to failing a restaurant inspection and place a marker on the google map with an info window"""
 
-    #   # restaurants = RestaurantInfo.objects.all()
-    #   # r = serializers.serialize("json", RestaurantInfo.objects.all(), fields=('longitude', 'latitude'))
+def restaurant_search(request):
+    """ Searches for a restaurant by name """
+    if request.method == "POST":
+        query = request.POST["name"]
 
-    #   #create a dict called restaurants that identifies each object by the retaurant's business_id
-    #   restaurants = {}
-    #   for place in RestaurantInfo.objects.all()[:50]:
-    #       restaurants[place.business_id] = {"name": place.business_name,
-    #                                         "address": place.address,
-    #                                         "longitude": place.longitude,
-    #                                         "latitude": place.latitude,
-    #                                         "bus_id": place.business_id
-    #                                         }
-    #       #create a dict containing the inspection report for each restaurant
-    #       results = {}
-    #       num = 1
-    #       for rpt in InspectionReport.objects.filter(restaurant=place.business_id):
-    #           for rslts in InspectionResult.objects.filter(inspection=rpt.inspection_serial_num):
-    #               results['result_' + str(num)] = {"inspection_result": rslts.inspection_result,
-    #                                                 "description": rslts.violation_description,
-    #                                                 "inspection_score": rslts.inspection_score}
-    #           num += 1
-    #       restaurants[place.business_id]["results"] = results
-    #   #print(json.dumps(restaurants, indent=4, sort_keys=True))
 
-    #   #export the results as a JSON to pass to the template
-    #   r = json.dumps(restaurants)
-    #   return render(request, 'safe_eats/safe_eats.html', {"restaurants_closed": r})
+        # r = serializers.serialize("json", RestaurantInfo.objects.all(), fields=('longitude', 'latitude'))
+
+        #create a dict called restaurants that identifies each object by the retaurant's business_id
+        restaurants = {}
+        for place in RestaurantInfo.objects.filter(Q(business_name__contains=query)):
+            restaurants[place.business_id] = {"name": place.business_name,
+                                                "address": place.address,
+                                                "longitude": place.longitude,
+                                                "latitude": place.latitude,
+                                                "bus_id": place.business_id
+                                            }
+            #create a dict containing the inspection report for each restaurant
+            results = {}
+            num = 1
+            for rpt in InspectionReport.objects.filter(restaurant=place.business_id):
+                for rslts in InspectionResult.objects.filter(inspection=rpt.inspection_serial_num):
+                    results['result_' + str(num)] = {"inspection_result": rslts.inspection_result,
+                                                    "description": rslts.violation_description,
+                                                    "inspection_score": rslts.inspection_score}
+                num += 1
+            restaurants[place.business_id]["results"] = results
+        #print(json.dumps(restaurants, indent=4, sort_keys=True))
+
+        #export the results as a JSON to pass to the template
+        r = json.dumps(restaurants)
+        print(r)
+        return render(request, 'safe_eats/safe_eats.html', {"restaurants": r})
