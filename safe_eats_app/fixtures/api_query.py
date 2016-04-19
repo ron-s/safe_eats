@@ -97,9 +97,9 @@ def get_restaurant_info():
                 violation["model"] = "safe_eats_app.InspectionResult"
                 violation["fields"]["inspection"] = val["inspection_serial_num"]
                 try:
-                    violation["fields"]["inspection_score"] = val["inspection_score"]
+                    violation["fields"]["inspection_score"] = int(val["inspection_score"])
                 except KeyError:
-                    violation["fields"]["inspection_score"] = ""
+                    violation["fields"]["inspection_score"] = 0
 
                 try:
                     violation["fields"]["inspection_type"] = val["inspection_type"]

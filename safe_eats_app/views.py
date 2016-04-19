@@ -73,9 +73,6 @@ def restaurant_search(request):
     if request.method == "POST":
         query = request.POST["name"]
 
-
-        # r = serializers.serialize("json", RestaurantInfo.objects.all(), fields=('longitude', 'latitude'))
-
         #create a dict called restaurants that identifies each object by the retaurant's business_id
         restaurants = {}
         for place in RestaurantInfo.objects.filter(Q(business_name__contains=query)):
@@ -101,3 +98,37 @@ def restaurant_search(request):
         r = json.dumps(restaurants)
         print(r)
         return render(request, 'safe_eats/safe_eats.html', {"restaurants": r})
+
+
+
+
+
+
+def worst_offenders(request):
+    """ Searches for all restaurants with an inspection score greater than 130  """
+
+
+    #create a dict called restaurants that identifies each object by the retaurant's business_id
+    restaurants = {}
+
+    offenders = InspectionResult.objects.filter(inspection_score__gte=170)
+    #reports = InspectionReport.objects.filter(offenders_set__inspection_score__gte=130)
+
+    # for place in offenders:
+    #         restaurants[place.inspection.restaurant.business_id] = {"name": place.business_name,
+    #                                             "address": place.address,
+    #                                             "longitude": place.longitude,
+    #                                             "latitude": place.latitude,
+    #                                             "bus_id": place.business_id
+    #                                         }
+    #         restaurants[place.inspection.restaurant.business_id]["results"]
+
+    #export the results as a JSON to pass to the template
+    r = 0#json.dumps(offenders)
+
+    data = serializers.serialize("json", offenders)
+
+    print(data)
+    #print(offenders[0].inspection.restaurant.business_name)
+
+    return render(request, 'safe_eats/safe_eats.html', {"restaurants": r})

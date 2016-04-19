@@ -34,7 +34,7 @@ class InspectionResult(models.Model):
     """Describes data saved in the Inspection Report table"""
 
     inspection = models.ForeignKey('InspectionReport')
-    inspection_score = models.CharField(max_length=3)
+    inspection_score = models.IntegerField()
     inspection_type = models.CharField(max_length=100)
     inspection_result = models.CharField(max_length=100)
     violation_description = models.CharField(max_length=100, blank=True)
