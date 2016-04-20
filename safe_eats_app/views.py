@@ -81,7 +81,7 @@ def restaurant_search(request):
                                                 "longitude": place.longitude,
                                                 "latitude": place.latitude,
                                                 "bus_id": place.business_id
-                                            }
+                                                }
             #create a dict containing the inspection report for each restaurant
             results = {}
             num = 1
@@ -89,7 +89,8 @@ def restaurant_search(request):
                 for rslts in InspectionResult.objects.filter(inspection=rpt.inspection_serial_num):
                     results['result_' + str(num)] = {"inspection_result": rslts.inspection_result,
                                                     "description": rslts.violation_description,
-                                                    "inspection_score": rslts.inspection_score}
+                                                    "inspection_score": rslts.inspection_score
+                                                    }
                 num += 1
             restaurants[place.business_id]["results"] = results
         #print(json.dumps(restaurants, indent=4, sort_keys=True))
@@ -108,27 +109,28 @@ def worst_offenders(request):
     """ Searches for all restaurants with an inspection score greater than 130  """
 
 
-    #create a dict called restaurants that identifies each object by the retaurant's business_id
+    #create a dict called restaurants that we'll place all the offenders into
     restaurants = {}
 
+    #locate all inspection results with a score greater than or equal to 130.
     offenders = InspectionResult.objects.filter(inspection_score__gte=170)
-    #reports = InspectionReport.objects.filter(offenders_set__inspection_score__gte=130)
 
-    # for place in offenders:
-    #         restaurants[place.inspection.restaurant.business_id] = {"name": place.business_name,
-    #                                             "address": place.address,
-    #                                             "longitude": place.longitude,
-    #                                             "latitude": place.latitude,
-    #                                             "bus_id": place.business_id
-    #                                         }
-    #         restaurants[place.inspection.restaurant.business_id]["results"]
+    for place in offenders:
+        restaurants[place.inspection.restaurant.business_id] = {"name": place.inspection.restaurant.business_name,
+                                                "address": place.inspection.restaurant.address,
+                                                "longitude": place.inspection.restaurant.longitude,
+                                                "latitude": place.inspection.restaurant.latitude,
+                                                "bus_id": place.inspection.restaurant.business_id
+                                                }
+
+
 
     #export the results as a JSON to pass to the template
     r = 0#json.dumps(offenders)
 
-    data = serializers.serialize("json", offenders)
+    data = json.dumps(restaurants)
 
     print(data)
     #print(offenders[0].inspection.restaurant.business_name)
 
-    return render(request, 'safe_eats/safe_eats.html', {"restaurants": r})
+    return render(request, 'safe_eats/safe_eats.html', {"restaurants": data})
