@@ -208,7 +208,7 @@ def pioneer_square(request):
 
 
 def neigborhood(request):
-    pass
+
     """ returns all restaurants in a neighborhood by zip code"""
 
 
