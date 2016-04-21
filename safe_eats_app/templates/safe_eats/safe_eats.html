@@ -10,16 +10,16 @@
 
     <div class="panel panel-default">
         <div class="panel-body">
-    <form id="searchform" method="post" action="/restaurant_search/">
-        {% csrf_token %}
-        <label for="name"></label>
-        <div class="input-group">
-        <input type="text" class="form-control" name="name" placeholder="Restaurant Name To Search..." required/>
-        <span class="input-group-btn">
-            <input class="btn btn-info" type="submit" name="submit" id="submit" value="GO!" />
-        </span>
-        </div>
-    </form>
+            <form id="searchform" method="post" action="/restaurant_search/">
+                {% csrf_token %}
+                <label for="name"></label>
+                <div class="input-group">
+                <input type="text" class="form-control" name="name" placeholder="Restaurant Name To Search..." required/>
+                <span class="input-group-btn">
+                <input class="btn btn-info" type="submit" name="submit" id="submit" value="GO!" />
+                </span>
+                </div>
+            </form>
         </div>
     </div>
     

@@ -1,5 +1,3 @@
-<!--document.getElementById('modify').innerHTML = ""; //delete the existing homepage map div -->
-
 {% extends "base.html" %}
 {% load staticfiles %}
 {% block content %}
@@ -38,6 +36,7 @@
         </div>
     </div>
 </div>
+
 <script src="http://maps.google.com/maps/api/js?sensor=false"
         type="text/javascript"></script>
 <!--Below we will draw a google map based on lat/long from each restaurant-->
@@ -50,7 +49,7 @@
         // create a google map and center it on the city of seattle
         var myOptions = {
             center: new google.maps.LatLng(47.6023411, -122.3238544),
-            zoom: 11,
+            zoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP
 
         };
@@ -70,7 +69,6 @@
             var lat = obj.latitude;
             var long = obj.longitude;
             console.log(obj)
-            console.log(name)
 
             latlngset = new google.maps.LatLng(lat, long);
             //define where to set the markers
@@ -80,11 +78,20 @@
             map.setCenter(marker.getPosition());
 
             //display the inspection result, inspection score and description of results
+            if (obj.results.result_1) {
+                inspectionResult = obj.results.result_1.inspection_result
+                inspectionScore = obj.results.result_1.inspection_score
+                description = obj.results.result_1.description
+            } else {
 
+                inspectionResult = "No Result"
+                inspectionScore = "None"
+                description = "None"
+            }
 
 
             // content string to place in the infowindow
-            var content = '<div class="infowindow"><b><a href="#" onclick="slidePanel(\'' + obj.bus_id + '\');return false;">' + obj.name + '</a></b></div>' + '<div class="infowindow">' + obj.address + '</div>' + '<div class="infowindow">' + 'Inspection Result:  ' + obj.inspection_result + '</div>' + '<div class="infowindow">' + 'Inspection Score:  ' + obj.inspection_score + '</div>' + '<div class="infowindow">' + obj.description + '</div>';
+            var content = '<div class="infowindow"><b><a href="#" onclick="slidePanel(\'' + obj.bus_id + '\');return false;">' + obj.name + '</a></b></div>' + '<div class="infowindow">' + obj.address + '</div>' + '<div class="infowindow">' + 'Inspection Result:  ' + inspectionResult + '</div>' + '<div class="infowindow">' + 'Inspection Score:  ' + inspectionScore + '</div>' + '<div class="infowindow">' + description + '</div>';
 
             var infowindow = new google.maps.InfoWindow();
             // add a click event listener when the user clicks on a marker to display the infowindow

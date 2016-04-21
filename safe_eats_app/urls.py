@@ -23,4 +23,7 @@ urlpatterns = [
     url(r'^restaurants/(?P<restaurant>\w+)/$', rest),
     url(r'^restaurant_search/$', restaurant_search),
     url(r'^worst_offenders/$', worst_offenders),
+    #url(r'^neigborhood/$', neighborhood),
+    url(r'^downtown/$', downtown),
+    url(r'^pioneer_square/$', pioneer_square),
 ]

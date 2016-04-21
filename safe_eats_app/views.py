@@ -40,6 +40,8 @@ def safe_eats_index(request):
     return render(request, 'safe_eats/safe_eats.html', {"restaurants": r})
 
 
+
+
 def rest(request, restaurant):
     """Grabs the details of the inspection report for an individual restaurant and passes it to the restaurant template"""
 
@@ -106,7 +108,7 @@ def restaurant_search(request):
 
 
 def worst_offenders(request):
-    """ Searches for all restaurants with an inspection score greater than 130  """
+    """ Searches for all restaurants with an inspection score greater than 170  """
 
 
     #create a dict called restaurants that we'll place all the offenders into
@@ -120,7 +122,11 @@ def worst_offenders(request):
                                                 "address": place.inspection.restaurant.address,
                                                 "longitude": place.inspection.restaurant.longitude,
                                                 "latitude": place.inspection.restaurant.latitude,
-                                                "bus_id": place.inspection.restaurant.business_id
+                                                "bus_id": place.inspection.restaurant.business_id,
+                                                "inspection_result": place.inspection_result,
+                                                "description": place.violation_description,
+                                                "inspection_score": place.inspection_score,
+                                                "inspection_date": place.inspection_date
                                                 }
 
 
@@ -133,4 +139,106 @@ def worst_offenders(request):
     print(data)
     #print(offenders[0].inspection.restaurant.business_name)
 
-    return render(request, 'safe_eats/safe_eats.html', {"restaurants": data})
+    return render(request, 'safe_eats/worst_offenders.html', {"restaurants": data})
+
+
+
+
+def downtown(request):
+    """ Searches for all restaurants in 98101 zip code """
+
+    # create a dict called restaurants that identifies each object by the retaurant's business_id
+    restaurants = {}
+    for place in RestaurantInfo.objects.filter(zip_code=98101):
+        restaurants[place.business_id] = {"name": place.business_name,
+                                          "address": place.address,
+                                          "longitude": place.longitude,
+                                          "latitude": place.latitude,
+                                          "bus_id": place.business_id
+                                          }
+        # create a dict containing the inspection report for each restaurant
+        results = {}
+        num = 1
+        for rpt in InspectionReport.objects.filter(restaurant=place.business_id):
+            for rslts in InspectionResult.objects.filter(inspection=rpt.inspection_serial_num):
+                results['result_' + str(num)] = {"inspection_result": rslts.inspection_result,
+                                                 "description": rslts.violation_description,
+                                                 "inspection_score": rslts.inspection_score}
+
+            num += 1
+        restaurants[place.business_id]["results"] = results
+    # print(json.dumps(restaurants, indent=4, sort_keys=True))
+
+    # export the results as a JSON to pass to the template
+    r = json.dumps(restaurants)
+    return render(request, 'safe_eats/downtown.html', {"restaurants": r})
+
+
+
+
+def pioneer_square(request):
+    """ Searches for all restaurants in 98104 zip code """
+
+    # create a dict called restaurants that identifies each object by the retaurant's business_id
+    restaurants = {}
+    for place in RestaurantInfo.objects.filter(zip_code=98104):
+        restaurants[place.business_id] = {"name": place.business_name,
+                                          "address": place.address,
+                                          "longitude": place.longitude,
+                                          "latitude": place.latitude,
+                                          "bus_id": place.business_id
+                                          }
+        # create a dict containing the inspection report for each restaurant
+        results = {}
+        num = 1
+        for rpt in InspectionReport.objects.filter(restaurant=place.business_id):
+            for rslts in InspectionResult.objects.filter(inspection=rpt.inspection_serial_num):
+                results['result_' + str(num)] = {"inspection_result": rslts.inspection_result,
+                                                 "description": rslts.violation_description,
+                                                 "inspection_score": rslts.inspection_score}
+
+            num += 1
+        restaurants[place.business_id]["results"] = results
+    # print(json.dumps(restaurants, indent=4, sort_keys=True))
+
+    # export the results as a JSON to pass to the template
+    r = json.dumps(restaurants)
+    return render(request, 'safe_eats/pioneer_square.html', {"restaurants": r})
+
+
+
+def neigborhood(request):
+    pass
+    """ returns all restaurants in a neighborhood by zip code"""
+
+
+
+    if request.method == "POST":
+        query = request.POST["name"]
+
+        #create a dict called restaurants that identifies each object by the retaurant's business_id
+        restaurants = {}
+        for place in RestaurantInfo.objects.filter(Q(zip_code__contains=query)):
+            restaurants[place.business_id] = {"name": place.business_name,
+                                                "address": place.address,
+                                                "longitude": place.longitude,
+                                                "latitude": place.latitude,
+                                                "bus_id": place.business_id
+                                                }
+            #create a dict containing the inspection report for each restaurant
+            results = {}
+            num = 1
+            for rpt in InspectionReport.objects.filter(restaurant=place.business_id):
+                for rslts in InspectionResult.objects.filter(inspection=rpt.inspection_serial_num):
+                    results['result_' + str(num)] = {"inspection_result": rslts.inspection_result,
+                                                    "description": rslts.violation_description,
+                                                    "inspection_score": rslts.inspection_score
+                                                    }
+                num += 1
+            restaurants[place.business_id]["results"] = results
+
+
+        #export the results as a JSON to pass to the template
+        r = json.dumps(restaurants)
+        print(r)
+        return render(request, 'safe_eats/safe_eats.html', {"restaurants": r})
