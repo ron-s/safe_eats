@@ -84,7 +84,7 @@
 
 
             // content string to place in the infowindow
-            var content = '<div class="infowindow"><b><a href="#" onclick="slidePanel(\'' + obj.bus_id + '\');return false;">' + obj.name + '</a></b></div>' + '<div class="infowindow">' + obj.address + '</div>' + '<div class="infowindow">' + 'Inspection Result:  ' + obj.inspection_result + '</div>' + '<div class="infowindow">' + 'Inspection Score:  ' + obj.inspection_score + '</div>' + '<div class="infowindow">' + obj.description + '</div>';
+            var content = '<div class="infowindow"><b><a href="#" onclick="slidePanel(\'' + obj.bus_id + '\');return false;">' + obj.name + '</a></b></div>' + '<div class="infowindow">' + obj.address + '</div>' + '<div class="infowindow">' + 'Inspection Result:  ' + obj.inspection_result + '</div>' + '<div class="infowindow">' + 'Inspection Date:  ' + obj.inspection_date + '</div>' + '<div class="infowindow">' + 'Inspection Score:  ' + obj.inspection_score + '</div>' + '<div class="infowindow">' + obj.description + '</div>';
 
             var infowindow = new google.maps.InfoWindow();
             // add a click event listener when the user clicks on a marker to display the infowindow

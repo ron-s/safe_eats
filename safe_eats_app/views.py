@@ -124,9 +124,9 @@ def worst_offenders(request):
                                                 "latitude": place.inspection.restaurant.latitude,
                                                 "bus_id": place.inspection.restaurant.business_id,
                                                 "inspection_result": place.inspection_result,
+                                                "inspection_date": date_handler(place.inspection.inspection_date),
                                                 "description": place.violation_description,
                                                 "inspection_score": place.inspection_score,
-                                                "inspection_date": place.inspection_date
                                                 }
 
 
@@ -140,6 +140,18 @@ def worst_offenders(request):
     #print(offenders[0].inspection.restaurant.business_name)
 
     return render(request, 'safe_eats/worst_offenders.html', {"restaurants": data})
+
+
+
+
+
+def date_handler(obj):
+    """serialize date-time from the python model for use in a json object"""
+
+    return obj.isoformat() if hasattr(obj, 'isoformat') else obj
+
+    #print (json.dumps(data, default=date_handler))
+
 
 
 
@@ -207,7 +219,7 @@ def pioneer_square(request):
 
 
 
-def neigborhood(request):
+def neighborhood(request):
 
     """ returns all restaurants in a neighborhood by zip code"""
 
@@ -215,10 +227,16 @@ def neigborhood(request):
 
     if request.method == "POST":
         query = request.POST["name"]
+        print(query)
+
+        zip_codes = {"Downtown": "98101",
+                    "Pioneer Square / Chinatown": "98104",
+                    "Belltown / Denny Triangle": "98121",
+                    }
 
         #create a dict called restaurants that identifies each object by the retaurant's business_id
         restaurants = {}
-        for place in RestaurantInfo.objects.filter(Q(zip_code__contains=query)):
+        for place in RestaurantInfo.objects.filter(zip_code=zip_codes[query]):
             restaurants[place.business_id] = {"name": place.business_name,
                                                 "address": place.address,
                                                 "longitude": place.longitude,
@@ -241,4 +259,4 @@ def neigborhood(request):
         #export the results as a JSON to pass to the template
         r = json.dumps(restaurants)
         print(r)
-        return render(request, 'safe_eats/safe_eats.html', {"restaurants": r})
+        return render(request, 'safe_eats/neighborhood.html', {"restaurants": r})
