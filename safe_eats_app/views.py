@@ -235,7 +235,9 @@ def neighborhood(request):
                     "Kirkland": ["98033"],
                     "Magnolia": ["98199"],
                     "Redmond": ["98052"],
-                    "Queen Anne": ["98119", "98109"]
+                    "Queen Anne": ["98119", "98109"],
+                    "Beacon Hill / Mt. Baker / Leschi": ["98144"],
+                    "Ballard": ["98107", "98117"]
                     }
 
         #create a dict called restaurants that identifies each object by the retaurant's business_id
