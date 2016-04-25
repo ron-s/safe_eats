@@ -20,18 +20,22 @@
   <form id="searchform" method="post" class="navbar-form navbar-left" action="/neighborhood/">
     {% csrf_token %}
     <div class="input-group">
-      <select name="name">
+      <select name="name" class="form-control" id="select">
         <optgroup label="Downtown Districts">
+          <option value"" disabled selected>Select a neighborhood</option>
           <option value"98101">Downtown</option>
           <option value"98104">Pioneer Square / Chinatown</option>
           <option value"98121">Belltown / Denny Triangle</option>
         <optgroup label="Neighborhoods">
-
+          <option value"98033">Kirkland</option>
+          <option value"98199">Magnolia</option>
+          <option value"98052">Redmond</option>
+          <option value"98109">Queen Anne</option>
         </optgroup>
       </select>
 
       <span class="input-group-btn">
-        <button type="submit" class="btn btn-primary btn-xs">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
       </span>
       </div>
   </form>

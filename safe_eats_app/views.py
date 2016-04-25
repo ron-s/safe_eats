@@ -232,6 +232,10 @@ def neighborhood(request):
         zip_codes = {"Downtown": "98101",
                     "Pioneer Square / Chinatown": "98104",
                     "Belltown / Denny Triangle": "98121",
+                    "Kirkland": "98033",
+                    "Magnolia": "98199",
+                    "Redmond": "98052",
+                    "Queen Anne": "98119" 
                     }
 
         #create a dict called restaurants that identifies each object by the retaurant's business_id
