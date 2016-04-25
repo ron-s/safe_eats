@@ -4,33 +4,7 @@
 {% load staticfiles %}
 {% block content %}
 
-<div class="container">
-    <div class="page-header" id="banner">
-        <h1>Safe Eats</h1>
-        <p class="lead">A Django App showcasing Restaurant Health Inspection Reports for King County (Seattle Metro).</p>
-    </div>
-
-
-    <div class="panel panel-default">
-        <div class="panel-body">
-    <form id="searchform" method="post" action="/restaurant_search/">
-        {% csrf_token %}
-        <label for="name"></label>
-        <div class="input-group">
-        <input type="text" class="form-control" name="name" placeholder="Restaurant Name To Search..." required/>
-        <span class="input-group-btn">
-            <input class="btn btn-info" type="submit" name="submit" id="submit" value="GO!" />
-        </span>
-        </div>
-    </form>
-        </div>
-    </div>
-    
-
-    <div class="container">
-        <p> Click on a marker to view a short health inspection response.</br>
-            Click on the restaurant name in the info window to view a history of reports.</p>
-    </div>
+<div>
     <div class="container mainContent">
         <div id="slide-panel"></div>
         <div id="modify">
@@ -38,6 +12,7 @@
         </div>
     </div>
 </div>
+
 <script src="http://maps.google.com/maps/api/js?sensor=false"
         type="text/javascript"></script>
 <!--Below we will draw a google map based on lat/long from each restaurant-->

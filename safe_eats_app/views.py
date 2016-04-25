@@ -229,18 +229,19 @@ def neighborhood(request):
         query = request.POST["name"]
         print(query)
 
-        zip_codes = {"Downtown": "98101",
-                    "Pioneer Square / Chinatown": "98104",
-                    "Belltown / Denny Triangle": "98121",
-                    "Kirkland": "98033",
-                    "Magnolia": "98199",
-                    "Redmond": "98052",
-                    "Queen Anne": "98119" 
+        zip_codes = {"Downtown": ["98101"],
+                    "Pioneer Square / Chinatown": ["98104"],
+                    "Belltown / Denny Triangle": ["98121"],
+                    "Kirkland": ["98033"],
+                    "Magnolia": ["98199"],
+                    "Redmond": ["98052"],
+                    "Queen Anne": ["98119", "98109"]
                     }
 
         #create a dict called restaurants that identifies each object by the retaurant's business_id
         restaurants = {}
-        for place in RestaurantInfo.objects.filter(zip_code=zip_codes[query]):
+
+        for place in RestaurantInfo.objects.filter(zip_code__in=zip_codes[query]):
             restaurants[place.business_id] = {"name": place.business_name,
                                                 "address": place.address,
                                                 "longitude": place.longitude,
