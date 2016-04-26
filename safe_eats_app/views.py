@@ -267,3 +267,34 @@ def neighborhood(request):
         r = json.dumps(restaurants)
         print(r)
         return render(request, 'safe_eats/neighborhood.html', {"restaurants": r})
+
+
+
+def closed(request):
+    """ Searches for all restaurants that were closed """
+
+    # create a dict called restaurants that identifies each object by the retaurant's business_id
+    restaurants = {}
+    for place in RestaurantInfo.objects.filter(inspection_closed_business=True):
+        restaurants[place.business_id] = {"name": place.business_name,
+                                          "address": place.address,
+                                          "longitude": place.longitude,
+                                          "latitude": place.latitude,
+                                          "bus_id": place.business_id
+                                          }
+        # create a dict containing the inspection report for each restaurant
+        results = {}
+        num = 1
+        for rpt in InspectionReport.objects.filter(restaurant=place.business_id):
+            for rslts in InspectionResult.objects.filter(inspection=rpt.inspection_serial_num):
+                results['result_' + str(num)] = {"inspection_result": rslts.inspection_result,
+                                                 "description": rslts.violation_description,
+                                                 "inspection_score": rslts.inspection_score}
+
+            num += 1
+        restaurants[place.business_id]["results"] = results
+    # print(json.dumps(restaurants, indent=4, sort_keys=True))
+
+    # export the results as a JSON to pass to the template
+    r = json.dumps(restaurants)
+    return render(request, 'safe_eats/closed.html', {"restaurants": r})

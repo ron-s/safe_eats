@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^neighborhood/$', neighborhood),
     url(r'^downtown/$', downtown),
     url(r'^pioneer_square/$', pioneer_square),
+    url(r'^closed/$', closed),
 ]

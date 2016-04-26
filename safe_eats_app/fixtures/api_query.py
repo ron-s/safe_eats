@@ -36,10 +36,8 @@ def get_restaurant_info():
                 # restaurant["fields"]["business_id"] = val["business_id"]
                 restaurant["fields"]["business_name"] = val["inspection_business_name"]
 
-                if val["inspection_closed_business"] == "true":
-                    restaurant["fields"]["inspection_closed_business"] = True
-                else:
-                    restaurant["fields"]["inspection_closed_business"] = False
+                restaurant["fields"]["inspection_closed_business"] = val["inspection_closed_business"]
+
                 try:
                     restaurant["fields"]["address"] = val["address"]
                 except KeyError:
