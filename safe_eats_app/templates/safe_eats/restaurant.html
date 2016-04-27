@@ -12,6 +12,7 @@ Address:  <b>{{ rest_info.address }}</b>
     <p class="bg-info">
 {{ rep.inspection_date }}<br>
     {% for x in rep.related_set %}
+    {{ x.inspection_result }}
         <!--if no violation description exists then print an english Satifactory result-->
         {% if x.violation_description == '' %}
             Satisfactory<br>
