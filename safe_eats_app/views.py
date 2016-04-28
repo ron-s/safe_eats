@@ -237,7 +237,12 @@ def neighborhood(request):
                     "Redmond": ["98052"],
                     "Queen Anne": ["98119", "98109"],
                     "Beacon Hill / Mt. Baker / Leschi": ["98144"],
-                    "Ballard": ["98107", "98117"]
+                    "Ballard": ["98107", "98117"],
+                    "Bellevue":["98004", "98005", "98006", "98007", "98008", "98039"],
+                    "Capitol Hill / Madrona": ["98122"],
+                    "Bainbridge Island / Mercer Island / Vashon Island":["98070", "98110", "98040"],
+                    "West Seattle":["98106", "98116", "98126", "98136", "98146"],
+                    "University District": ["98105"]
                     }
 
         #create a dict called restaurants that identifies each object by the retaurant's business_id
