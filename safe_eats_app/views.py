@@ -303,4 +303,5 @@ def closed(request):
     # export the results as a JSON to pass to the template
     r = json.dumps(restaurants)
     return render(request, 'safe_eats/closed.html', {"restaurants": r})
-    
+
+
