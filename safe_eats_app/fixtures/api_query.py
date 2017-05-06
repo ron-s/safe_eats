@@ -31,29 +31,14 @@ def get_restaurant_info():
         restaurant = {}
         restaurant["fields"] = {}
         restaurant["model"] = "safe_eats_app.restaurantinfo"
-        restaurant["pk"] = val["business_id"]
-        # restaurant["fields"]["business_id"] = val["business_id"]
+        restaurant["pk"] = val.get("business_id", "")
         restaurant["fields"]["business_name"] = val.get("inspection_business_name", "")
+        restaurant["fields"]["address"] = val.get("address", "")
+        restaurant["fields"]["city"] = val.get("city", "")
+        restaurant["fields"]["zip_code"] = val.get("zip_code", "")
 
-        restaurant["fields"]["inspection_closed_business"] = val.get("inspection_closed_business", "")
-
-        try:
-            restaurant["fields"]["address"] = val["address"]
-        except KeyError:
-            restaurant["fields"]["address"] = ""
-
-        try:
-            restaurant["fields"]["city"] = val["city"]
-        except KeyError:
-            restaurant["fields"]["city"] = ""
-
-        try:
-            restaurant["fields"]["zip_code"] = val["zip_code"]
-        except KeyError:
-            restaurant["fields"]["zip_code"] = ""
-
-        restaurant["fields"]["longitude"] = val["longitude"]
-        restaurant["fields"]["latitude"] = val["latitude"]
+        restaurant["fields"]["longitude"] = val.get("longitude","")
+        restaurant["fields"]["latitude"] = val.get("latitude", "")
 
         #add the results to the restaurant dict
         rests.append(restaurant)

@@ -6,7 +6,7 @@ rests = []
 
 def open_json():
 
-	with open('rests.json', "r") as f:
+	with open('test_data.json', "r") as f:
 		d = json.load(f)
 
 	return d
