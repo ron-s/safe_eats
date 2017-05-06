@@ -1,6 +1,7 @@
-import requests
+# import requests
 import json
 import time
+from testing import open_json
 
 rests = []
 inspect_report = []
@@ -11,125 +12,90 @@ def get_restaurant_info():
     """Contact the King county API to obtain a JSON list of objects containing restaurant health inspection info that will be saved to 3 separate JSON files. """
     #url to all king county restaurant health inspections since 2006
 
-    offset = 0
-    count = 0
-    pk = 0
 
-    while offset < 10000:
-        url = "http://data.kingcounty.gov/resource/gkhn-e8mn.json?$limit=10000&$offset=" + str(offset) + "&$where=inspection_date%20between%20%272014-01-01T12:00:00%27%20and%20%272016-04-08T14:00:00%27&$$app_token=ybQy5wLjPD5YeX6uCeahIgRdT"
+    # count = 0
+    # pk = 0
 
-        #url = "https://data.kingcounty.gov/resource/gkhn-e8mn.json?&inspection_business_name=Subway&$where=inspection_date%20between%20%272015-01-01T12:00:00%27%20and%20%272016-03-22T14:00:00%27"
-        r = requests.get(url)
+    # # url = "http://data.kingcounty.gov/resource/gkhn-e8mn.json?$limit=10000&$where=inspection_date%20between%20%272016-01-01T12:00:00%27%20and%20%272017-05-01T14:00:00%27"
 
-        data = r.json()
-        #print(data)
+    # r = requests.get(url)
+
+    data = open_json()
 
 
-        for val in data:
-            try:
-                #parse the JSON into a dict of keys called restaurant
 
-                restaurant = {}
-                restaurant["fields"] = {}
-                restaurant["model"] = "safe_eats_app.restaurantinfo"
-                restaurant["pk"] = val["business_id"]
-                # restaurant["fields"]["business_id"] = val["business_id"]
-                restaurant["fields"]["business_name"] = val["inspection_business_name"]
+    for val in data:
+        
+        #parse the JSON into a dict of keys called restaurant
 
-                restaurant["fields"]["inspection_closed_business"] = val["inspection_closed_business"]
+        restaurant = {}
+        restaurant["fields"] = {}
+        restaurant["model"] = "safe_eats_app.restaurantinfo"
+        restaurant["pk"] = val["business_id"]
+        # restaurant["fields"]["business_id"] = val["business_id"]
+        restaurant["fields"]["business_name"] = val.get("inspection_business_name", "")
 
-                try:
-                    restaurant["fields"]["address"] = val["address"]
-                except KeyError:
-                    restaurant["fields"]["address"] = ""
+        restaurant["fields"]["inspection_closed_business"] = val.get("inspection_closed_business", "")
 
-                try:
-                    restaurant["fields"]["city"] = val["city"]
-                except KeyError:
-                    restaurant["fields"]["city"] = ""
+        try:
+            restaurant["fields"]["address"] = val["address"]
+        except KeyError:
+            restaurant["fields"]["address"] = ""
 
-                try:
-                    restaurant["fields"]["zip_code"] = val["zip_code"]
-                except KeyError:
-                    restaurant["fields"]["zip_code"] = ""
+        try:
+            restaurant["fields"]["city"] = val["city"]
+        except KeyError:
+            restaurant["fields"]["city"] = ""
 
-                restaurant["fields"]["longitude"] = val["longitude"]
-                restaurant["fields"]["latitude"] = val["latitude"]
+        try:
+            restaurant["fields"]["zip_code"] = val["zip_code"]
+        except KeyError:
+            restaurant["fields"]["zip_code"] = ""
 
-                #add the results to the restaurant dict
-                rests.append(restaurant)
+        restaurant["fields"]["longitude"] = val["longitude"]
+        restaurant["fields"]["latitude"] = val["latitude"]
 
-
-                #parse the JSON into a dict of keys called inspection
-                inspection = {}
-                inspection["pk"] = val["inspection_serial_num"]
-                inspection["model"] = "safe_eats_app.InspectionReport"
-                inspection["fields"] = {}
-                inspection["fields"]["inspection_business_name"] = val["inspection_business_name"]
-
-                try:
-                    inspection["fields"]["restaurant"] = val["business_id"]
-                except KeyError:
-                    inspection["fields"]["restaurant"] = ""
-
-                try:
-                    inspection["fields"]["inspection_date"] = val["inspection_date"][0:10]
-                except KeyError:
-                    inspection["fields"]["inspection_date"] = ""
-
-                #add the results to the inspection dict
-                inspect_report.append(inspection)
+        #add the results to the restaurant dict
+        rests.append(restaurant)
 
 
-                #parse the JSON into a dict of keys called violation
-                violation = {}
-                # if val["violation_points"] == "0":
-                #     count += 1
+        #parse the JSON into a dict of keys called inspection
+        inspection = {}
 
-                try:
-                    violation["violation_record_id"] = val.get("violation_record_id")
-                except KeyError:
-                    violation["violation_record_id"] = "0"
+        if "inspection_serial_num" in val:
 
-                violation["fields"] = {}
-                violation["model"] = "safe_eats_app.InspectionResult"
-                violation["fields"]["inspection"] = val["inspection_serial_num"]
-                try:
-                    violation["fields"]["inspection_score"] = int(val["inspection_score"])
-                except KeyError:
-                    violation["fields"]["inspection_score"] = 0
+            inspection["pk"] = val["inspection_serial_num"]
+            inspection["model"] = "safe_eats_app.InspectionReport"
+            inspection["fields"] = {}
+            inspection["fields"]["inspection_business_name"] = val.get("inspection_business_name", "")
+            inspection["fields"]["restaurant"] = val.get("business_id", "")
 
-                try:
-                    violation["fields"]["inspection_type"] = val["inspection_type"]
-                except KeyError:
-                    violation["fields"]["inspection_type"] = ""
+            inspect_date = val.get("inspection_date", "")
+            if len(inspect_date) > 10:
+                inspect_date = inspect_date[0:10]
+            inspection["fields"]["inspection_date"] = inspect_date
 
-                try:
-                    violation["fields"]["inspection_result"] = val["inspection_result"]
-                except KeyError:
-                    violation["fields"]["inspection_result"] = ""
-
-                try:
-                    violation["fields"]["violation_description"] = val["violation_description"]
-                except KeyError:
-                    violation["fields"]["violation_description"] = ""
-
-                violation["fields"]["violation_points"] = val["violation_points"]
-                violation["pk"] = val["violation_record_id"]
-
-                #add the results to the violation dict
-                inspect_results.append(violation)
-
-                pk += 1
+            inspect_report.append(inspection)
 
 
-            except KeyError:
-                pass
+        #parse the JSON into a dict of keys called violation
+        violation = {}
 
-        offset += 500
-        time.sleep(5)
-        print(offset)
+        if "violation_record_id" in val:
 
+            violation["violation_record_id"] = int(val.get("inspection_score", 0))
+
+            violation["fields"] = {}
+            violation["model"] = "safe_eats_app.InspectionResult"
+            violation["fields"]["inspection"] = val.get("inspection_serial_num", "")
+            violation["fields"]["inspection_score"] = int(val.get("inspection_score", 0))
+            violation["fields"]["inspection_type"] = val.get("inspection_type", "")
+            violation["fields"]["inspection_result"] = val.get("inspection_result", "")
+            violation["fields"]["violation_description"] = val.get("violation_description", "")
+            violation["fields"]["violation_points"] = val.get("violation_points", "")
+            
+            #add the results to the violation dict
+            inspect_results.append(violation)
 
 
 
