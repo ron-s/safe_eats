@@ -31,8 +31,9 @@ def get_restaurant_info():
         restaurant = {}
         restaurant["fields"] = {}
         restaurant["model"] = "safe_eats_app.restaurantinfo"
+        restaurant["fields"]["business_name"] = val.get("inspection_business_name", val.get("name", ""))
         restaurant["pk"] = val.get("business_id", "")
-        restaurant["fields"]["business_name"] = val.get("inspection_business_name", "")
+        
         restaurant["fields"]["address"] = val.get("address", "")
         restaurant["fields"]["city"] = val.get("city", "")
         restaurant["fields"]["zip_code"] = val.get("zip_code", "")
