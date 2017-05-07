@@ -4,29 +4,29 @@ import time
 # from testing import open_json
 
 rests = []
+rest_ids = set()
 inspect_report = []
 inspect_results = []
 
 
 def get_restaurant_info():
     """Contact the King county API to obtain a JSON list of objects containing restaurant health inspection info that will be saved to 3 separate JSON files. """
-    #url to all king county restaurant health inspections since 2006
+    
 
     offset = 0
-    while offset < 10000:
+
+    while offset < 60000:
 
 
-        # count = 0
+        #url to all king county restaurant health inspections since Jan 1, 2016
+        url = 'http://data.kingcounty.gov/resource/gkhn-e8mn.json?$limit=50000&$order=:id&$where=inspection_date%20between%20%272016-01-01T12:00:00%27%20and%20%272017-05-01T12:00:00%27'
 
-        url = 'http://data.kingcounty.gov/resource/gkhn-e8mn.json?$limit=1000&$where=inspection_date%20between%20%272016-01-01T12:00:00%27%20and%20%272017-05-01T12:00:00%27'
+        # url = 'http://data.kingcounty.gov/resource/gkhn-e8mn.json?$limit=10&$order=:id&$where=inspection_date%20between%20%272016-01-01T12:00:00%27%20and%20%272017-05-01T12:00:00%27'
 
         r = requests.get(url)
 
         # data = open_json()
         data = r.json()
-
-
-
 
         for val in data:
             
@@ -35,18 +35,21 @@ def get_restaurant_info():
             restaurant = {}
             restaurant["fields"] = {}
             restaurant["model"] = "safe_eats_app.restaurantinfo"
-            restaurant["fields"]["business_name"] = val.get("inspection_business_name", val.get("name", ""))
-            restaurant["pk"] = val.get("business_id", "")
-            
-            restaurant["fields"]["address"] = val.get("address", "")
-            restaurant["fields"]["city"] = val.get("city", "")
-            restaurant["fields"]["zip_code"] = val.get("zip_code", "")
 
-            restaurant["fields"]["longitude"] = val.get("longitude","")
-            restaurant["fields"]["latitude"] = val.get("latitude", "")
+            pk = val.get("business_id", "")
+            if pk not in rest_ids:
+                restaurant["pk"] = val.get("business_id", "")
+                restaurant["fields"]["business_name"] = val.get("inspection_business_name", val.get("name", ""))
+                restaurant["fields"]["address"] = val.get("address", "")
+                restaurant["fields"]["city"] = val.get("city", "")
+                restaurant["fields"]["zip_code"] = val.get("zip_code", "")
+                restaurant["fields"]["longitude"] = val.get("longitude","")
+                restaurant["fields"]["latitude"] = val.get("latitude", "")
 
-            #add the results to the restaurant dict
-            rests.append(restaurant)
+                #add the restaurant results to the rests dict
+                rests.append(restaurant)
+                #add the unique pk to the rest_ids
+                rest_ids.add(pk)
 
 
             #parse the JSON into a dict of keys called inspection
@@ -88,7 +91,7 @@ def get_restaurant_info():
                 inspect_results.append(violation)
 
 
-        offset += 1000
+        offset += 50000
         time.sleep(2)
         print("number of restaurants in list: {}".format(len(rests)))
 
