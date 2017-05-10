@@ -20,6 +20,7 @@ target/
 safe_eats_venv/
 
 .DS_Store
+safe_eats_project/.DS_Store
 
 restaurants.json
 inspection_reports.json

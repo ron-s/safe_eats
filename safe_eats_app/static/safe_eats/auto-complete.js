@@ -81,7 +81,7 @@ function initMap() {
     //console.log(data);
       
       $.each(data, function(i, entry) {
-        var contentString = '<div><b>'+ entry.inspection_business_name +'</b></div>'+'<div>'+ entry.address +'</div>'+'<div>'+ 'Inspection Result:  ' + entry.inspection_result +'</div>'+'<div>'+                         entry.violation_description +'</div>';   
+        var contentString = '<div><b>'+ entry.inspection_business_name +'</b></div>'+'<div>'+ entry.address +'</div>'+'<div>'+ 'Inspection Result:  ' + entry.inspection_result +'</div>'+'<div>'+ entry.violation_description +'</div>';   
         infowindow.setContent(contentString);
         infowindow.open(map, marker);
         // KS: moved the infowindow generation here.  You'll have to parse the API data return for matches. 
