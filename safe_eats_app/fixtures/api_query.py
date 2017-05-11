@@ -10,7 +10,10 @@ inspect_results = []
 
 
 def get_restaurant_info():
-    """Contact the King county API to obtain a JSON list of objects containing restaurant health inspection info that will be saved to 3 separate JSON files. """
+    """
+    Contact the King county API to obtain a JSON list of objects containing 
+    restaurant health inspection info that will be saved to 3 separate JSON files. 
+    """
     
 
     offset = 0
