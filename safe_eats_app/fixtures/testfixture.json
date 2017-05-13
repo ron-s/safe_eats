@@ -1,0 +1,120 @@
+[{
+    "fields": {
+      "business_name": "100 LB CLAM",
+      "address": "1001 FAIRVIEW AVE N Unit 1700A",
+      "city": "SEATTLE",
+      "zip_code": "98109",
+      "longitude": "-122.3317269400",
+      "latitude": "47.6290212900"
+    },
+    "model": "safe_eats_app.restaurantinfo",
+    "pk": "PR0085848"
+  },
+  {
+    "fields": {
+      "business_name": "108 AUTHENTIC VIETNAMESE CUISINE",
+      "address": "18114 E VALLEY HWY",
+      "city": "KENT",
+      "zip_code": "98032",
+      "longitude": "-122.2193470000",
+      "latitude": "47.4399230000"
+    },
+    "model": "safe_eats_app.restaurantinfo",
+    "pk": "PR0071992"
+  },
+  {
+    "fields": {
+      "business_name": "112TH DELI",
+      "address": "1120 112TH AVE NE #125",
+      "city": "BELLEVUE",
+      "zip_code": "98004",
+      "longitude": "-122.1896575560",
+      "latitude": "47.6206458226"
+    },
+    "model": "safe_eats_app.restaurantinfo",
+    "pk": "PR0066560"
+  },
+  {
+    "fields": {
+      "business_name": "12 Xpresso",
+      "address": "106 148TH AVE NE ",
+      "city": "BELLEVUE",
+      "zip_code": "98007",
+      "longitude": "-122.1424324225",
+      "latitude": "47.6101414348"
+    },
+    "model": "safe_eats_app.restaurantinfo",
+    "pk": "PR0063735"
+  },
+  {
+    "fields": {
+      "business_name": "13 COINS",
+      "address": "18000 PACIFIC HWY S ",
+      "city": "Seattle",
+      "zip_code": "98188",
+      "longitude": "-122.2957679697",
+      "latitude": "47.4415898055"
+    },
+    "model": "safe_eats_app.restaurantinfo",
+    "pk": "PR0004264"
+  },
+  {
+    "fields": {
+      "business_name": "13 COINS BELLEVUE",
+      "address": "900 BELLEVUE WAY NE ",
+      "city": "Bellevue",
+      "zip_code": "98004",
+      "longitude": "-122.2010294576",
+      "latitude": "47.6182817801"
+    },
+    "model": "safe_eats_app.restaurantinfo",
+    "pk": "PR0016978"
+  },
+  {
+    "fields": {
+      "business_name": "14 CARROT CAFE",
+      "address": "2305 EASTLAKE AVE E ",
+      "city": "Seattle",
+      "zip_code": "98102",
+      "longitude": "-122.3261014499",
+      "latitude": "47.6398598066"
+    },
+    "model": "safe_eats_app.restaurantinfo",
+    "pk": "PR0003061"
+  },
+  {
+    "fields": {
+      "business_name": "14 CARROT CAFE",
+      "address": "2305 EASTLAKE AVE E ",
+      "city": "Seattle",
+      "zip_code": "98102",
+      "longitude": "-122.3261014499",
+      "latitude": "47.6398598066"
+    },
+    "model": "safe_eats_app.restaurantinfo",
+    "pk": "PR0051089"
+  },
+  {
+    "fields": {
+      "business_name": "1ST LUTHERAN",
+      "address": "10207 NE 183RD ST ",
+      "city": "Bothell",
+      "zip_code": "98011",
+      "longitude": "-122.2034163713",
+      "latitude": "47.7607441781"
+    },
+    "model": "safe_eats_app.restaurantinfo",
+    "pk": "PR0006005"
+  },
+  {
+    "fields": {
+      "business_name": "2 SISTERS ESPRESSO",
+      "address": "35739 W VALLEY HWY ",
+      "city": "ALGONA",
+      "zip_code": "98001",
+      "longitude": "-122.2594466412",
+      "latitude": "47.2802449938"
+    },
+    "model": "safe_eats_app.restaurantinfo",
+    "pk": "PR0067453"
+  }]

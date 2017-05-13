@@ -1,0 +1,91 @@
+[
+  {
+    "pk": "DAAVWBEAA",
+    "model": "safe_eats_app.InspectionReport",
+    "fields": {
+      "inspection_business_name": "100 LB CLAM",
+      "restaurant": "PR0085848",
+      "inspection_date": "2016-08-31"
+    }
+  },
+  {
+    "pk": "DAO4F1HGE",
+    "model": "safe_eats_app.InspectionReport",
+    "fields": {
+      "inspection_business_name": "108 AUTHENTIC VIETNAMESE CUISINE",
+      "restaurant": "PR0071992",
+      "inspection_date": "2016-02-25"
+    }
+  },
+  {
+    "pk": "DAZGFQ3B2",
+    "model": "safe_eats_app.InspectionReport",
+    "fields": {
+      "inspection_business_name": "112TH DELI",
+      "restaurant": "PR0066560",
+      "inspection_date": "2016-02-10"
+    }
+  },
+  {
+    "pk": "DANL86FVE",
+    "model": "safe_eats_app.InspectionReport",
+    "fields": {
+      "inspection_business_name": "12 Xpresso",
+      "restaurant": "PR0063735",
+      "inspection_date": "2016-01-29"
+    }
+  },
+  {
+    "pk": "DAVCZ4UUS",
+    "model": "safe_eats_app.InspectionReport",
+    "fields": {
+      "inspection_business_name": "13 COINS",
+      "restaurant": "PR0004264",
+      "inspection_date": "2016-08-09"
+    }
+  },
+  {
+    "pk": "DA0QCQUII",
+    "model": "safe_eats_app.InspectionReport",
+    "fields": {
+      "inspection_business_name": "13 COINS BELLEVUE",
+      "restaurant": "PR0016978",
+      "inspection_date": "2016-06-17"
+    }
+  },
+  {
+    "pk": "DA0QCQUII",
+    "model": "safe_eats_app.InspectionReport",
+    "fields": {
+      "inspection_business_name": "13 COINS BELLEVUE",
+      "restaurant": "PR0016978",
+      "inspection_date": "2016-06-17"
+    }
+  },
+  {
+    "pk": "DA0QCQUII",
+    "model": "safe_eats_app.InspectionReport",
+    "fields": {
+      "inspection_business_name": "13 COINS BELLEVUE",
+      "restaurant": "PR0016978",
+      "inspection_date": "2016-06-17"
+    }
+  },
+  {
+    "pk": "DAQODIK48",
+    "model": "safe_eats_app.InspectionReport",
+    "fields": {
+      "inspection_business_name": "13 COINS BELLEVUE",
+      "restaurant": "PR0016978",
+      "inspection_date": "2016-01-12"
+    }
+  },
+  {
+    "pk": "DAQODIK48",
+    "model": "safe_eats_app.InspectionReport",
+    "fields": {
+      "inspection_business_name": "13 COINS BELLEVUE",
+      "restaurant": "PR0016978",
+      "inspection_date": "2016-01-12"
+    }
+  }]

@@ -1,0 +1,109 @@
+[
+  {
+    "violation_record_id": 5,
+    "fields": {
+      "inspection": "DAO4F1HGE",
+      "inspection_score": 5,
+      "inspection_type": "Routine Inspection/Field Review",
+      "inspection_result": "Satisfactory",
+      "violation_description": "4100 - Warewashing facilities properly installed,...",
+      "violation_points": "5"
+    },
+    "model": "safe_eats_app.InspectionResult"
+  },
+  {
+    "violation_record_id": 10,
+    "fields": {
+      "inspection": "DAZGFQ3B2",
+      "inspection_score": 10,
+      "inspection_type": "Routine Inspection/Field Review",
+      "inspection_result": "Unsatisfactory",
+      "violation_description": "2110 - Proper cold holding temperatures (greater than  45 degrees F)",
+      "violation_points": "10"
+    },
+    "model": "safe_eats_app.InspectionResult"
+  },
+  {
+    "violation_record_id": 10,
+    "fields": {
+      "inspection": "DAVCZ4UUS",
+      "inspection_score": 10,
+      "inspection_type": "Routine Inspection/Field Review",
+      "inspection_result": "Unsatisfactory",
+      "violation_description": "2110 - Proper cold holding temperatures (greater than  45 degrees F)",
+      "violation_points": "10"
+    },
+    "model": "safe_eats_app.InspectionResult"
+  },
+  {
+    "violation_record_id": 20,
+    "fields": {
+      "inspection": "DA0QCQUII",
+      "inspection_score": 20,
+      "inspection_type": "Routine Inspection/Field Review",
+      "inspection_result": "Unsatisfactory",
+      "violation_description": "3100 - Proper labeling, signage",
+      "violation_points": "5"
+    },
+    "model": "safe_eats_app.InspectionResult"
+  },
+  {
+    "violation_record_id": 20,
+    "fields": {
+      "inspection": "DA0QCQUII",
+      "inspection_score": 20,
+      "inspection_type": "Routine Inspection/Field Review",
+      "inspection_result": "Unsatisfactory",
+      "violation_description": "4100 - Warewashing facilities properly installed,...",
+      "violation_points": "5"
+    },
+    "model": "safe_eats_app.InspectionResult"
+  },
+  {
+    "violation_record_id": 20,
+    "fields": {
+      "inspection": "DA0QCQUII",
+      "inspection_score": 20,
+      "inspection_type": "Routine Inspection/Field Review",
+      "inspection_result": "Unsatisfactory",
+      "violation_description": "2110 - Proper cold holding temperatures (greater than  45 degrees F)",
+      "violation_points": "10"
+    },
+    "model": "safe_eats_app.InspectionResult"
+  },
+  {
+    "violation_record_id": 20,
+    "fields": {
+      "inspection": "DAQODIK48",
+      "inspection_score": 20,
+      "inspection_type": "Routine Inspection/Field Review",
+      "inspection_result": "Unsatisfactory",
+      "violation_description": "3100 - Proper labeling, signage",
+      "violation_points": "5"
+    },
+    "model": "safe_eats_app.InspectionResult"
+  },
+  {
+    "violation_record_id": 20,
+    "fields": {
+      "inspection": "DAQODIK48",
+      "inspection_score": 20,
+      "inspection_type": "Routine Inspection/Field Review",
+      "inspection_result": "Unsatisfactory",
+      "violation_description": "4100 - Warewashing facilities properly installed,...",
+      "violation_points": "5"
+    },
+    "model": "safe_eats_app.InspectionResult"
+  },
+  {
+    "violation_record_id": 20,
+    "fields": {
+      "inspection": "DAQODIK48",
+      "inspection_score": 20,
+      "inspection_type": "Routine Inspection/Field Review",
+      "inspection_result": "Unsatisfactory",
+      "violation_description": "2110 - Proper cold holding temperatures (greater than  45 degrees F)",
+      "violation_points": "10"
+    },
+    "model": "safe_eats_app.InspectionResult"
+  }]

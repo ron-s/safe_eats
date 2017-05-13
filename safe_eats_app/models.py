@@ -11,8 +11,8 @@ class RestaurantInfo(models.Model):
     address = models.CharField(max_length=100, blank=True)
     city = models.CharField(max_length=50)
     zip_code = models.CharField(max_length=5)
-    longitude = models.FloatField(blank=True)
-    latitude = models.FloatField(blank=True)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
 
     def __str__(self):
         return self.business_name

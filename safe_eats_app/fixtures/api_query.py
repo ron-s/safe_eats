@@ -43,8 +43,8 @@ def get_restaurant_info():
                 restaurant["fields"]["address"] = val.get("address", "")
                 restaurant["fields"]["city"] = val.get("city", "")
                 restaurant["fields"]["zip_code"] = val.get("zip_code", "")
-                restaurant["fields"]["longitude"] = val.get("longitude","")
-                restaurant["fields"]["latitude"] = val.get("latitude", "")
+                restaurant["fields"]["longitude"] = val.get("longitude",None)
+                restaurant["fields"]["latitude"] = val.get("latitude", None)
 
                 #add the restaurant results to the rests dict
                 rests.append(restaurant)
@@ -76,7 +76,7 @@ def get_restaurant_info():
 
             if "violation_record_id" in val:
 
-                violation["violation_record_id"] = int(val.get("inspection_score", 0))
+                violation["pk"] = val.get("violation_record_id", "")
 
                 violation["fields"] = {}
                 violation["model"] = "safe_eats_app.InspectionResult"
