@@ -72,12 +72,16 @@ def rest(request, restaurant):
 
 def restaurant_search(request):
     """ Searches for a restaurant by name """
-    if request.method == "POST":
-        query = request.POST["name"]
+    # if request.method == "GET":
+    #     print("This is a get request")
+    if request.method == "GET":
+        query = request.GET["name"]
 
         #create a dict called restaurants that identifies each object by the retaurant's business_id
         restaurants = {}
-        for place in RestaurantInfo.objects.filter(Q(business_name__contains=query)):
+        # for place in RestaurantInfo.objects.all()[:10]:
+        for place in RestaurantInfo.objects.filter(business_name__icontains=query):
+            print("this is a place object: {} ".format(place))
             restaurants[place.business_id] = {"name": place.business_name,
                                                 "address": place.address,
                                                 "longitude": place.longitude,

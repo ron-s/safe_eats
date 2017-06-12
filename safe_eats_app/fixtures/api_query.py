@@ -15,11 +15,11 @@ def get_restaurant_info():
 
     offset = 0
 
-    while offset < 60000:
+    while offset < 100000:
 
 
         #url to all king county restaurant health inspections since Jan 1, 2016 ordered by socrata ID
-        url = 'http://data.kingcounty.gov/resource/gkhn-e8mn.json?$limit=50000&$order=:id&$where=inspection_date%20between%20%272016-01-01T12:00:00%27%20and%20%272017-05-01T12:00:00%27'
+        url = 'http://data.kingcounty.gov/resource/gkhn-e8mn.json?$limit=50000&$offset={}&$order=:id&$where=inspection_date%20between%20%272016-01-01T12:00:00%27%20and%20%272017-06-01T12:00:00%27'.format(offset)
 
         # url = 'http://data.kingcounty.gov/resource/gkhn-e8mn.json?$limit=10&$order=:id&$where=inspection_date%20between%20%272016-01-01T12:00:00%27%20and%20%272017-05-01T12:00:00%27'
 
