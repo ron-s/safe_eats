@@ -2,13 +2,16 @@ from .models import RestaurantInfo, InspectionReport, InspectionResult
 from django.shortcuts import render
 import json
 from django.core import serializers
-from django.db.models import Q
 
 
 
 
 def safe_eats_index(request):
-    """creates a json string containing every restaurant and its associated info that will be placed on the homepage map as a marker with info window"""
+    """
+    creates a json string containing every restaurant 
+    and its associated info that will be placed on the 
+    homepage map as a marker with info window
+    """
 
     # restaurants = RestaurantInfo.objects.all()
     # r = serializers.serialize("json", RestaurantInfo.objects.all(), fields=('longitude', 'latitude'))
@@ -43,7 +46,10 @@ def safe_eats_index(request):
 
 
 def rest(request, restaurant):
-    """Grabs the details of the inspection report for an individual restaurant and passes it to the restaurant template"""
+    """
+    Grabs the details of the inspection report for an individual 
+    restaurant and passes it to the restaurant template
+    """
 
     restaurant_info = RestaurantInfo.objects.get(business_id=restaurant)
     # sort the results by decending date
@@ -72,14 +78,13 @@ def rest(request, restaurant):
 
 def restaurant_search(request):
     """ Searches for a restaurant by name """
-    # if request.method == "GET":
-    #     print("This is a get request")
+
     if request.method == "GET":
         query = request.GET["name"]
 
         #create a dict called restaurants that identifies each object by the retaurant's business_id
         restaurants = {}
-        # for place in RestaurantInfo.objects.all()[:10]:
+
         for place in RestaurantInfo.objects.filter(business_name__icontains=query):
             print("this is a place object: {} ".format(place))
             restaurants[place.business_id] = {"name": place.business_name,
@@ -99,7 +104,6 @@ def restaurant_search(request):
                                                     }
                 num += 1
             restaurants[place.business_id]["results"] = results
-        #print(json.dumps(restaurants, indent=4, sort_keys=True))
 
         #export the results as a JSON to pass to the template
         r = json.dumps(restaurants)
