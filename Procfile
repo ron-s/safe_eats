@@ -1,1 +1,0 @@
-web: gunicorn safe_eats_app.wsgi --log-file -
